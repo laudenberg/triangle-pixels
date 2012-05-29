@@ -9,7 +9,7 @@ require "haml"
 class Tile
     attr_accessor :red, :green, :blue, :norm
 
-    def initialize(red = 0, green = 0, blue = 0, norm = 1.0)
+    def initialize(red = 0, green = 0, blue = 0, norm = 0.0)
       @red = red
       @green = green
       @blue = blue
@@ -46,7 +46,13 @@ class Tile
 
     def color
         scale = 256 * norm
-        sprintf "#%02x%02x%02x", red / scale, green / scale, blue / scale
+
+        if scale > 0.0
+          sprintf "#%02x%02x%02x", red / scale, green / scale, blue / scale
+        else
+          "#000000"
+        end
+
     end
 
     def to_s
