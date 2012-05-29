@@ -78,7 +78,7 @@ class Float
 
 end
 
-if ARGV.size < 2
+if ARGV.size < 1
   $stderr.puts "Usage: ./triangle-pixels.rb IMAGE_FILE NUMBER_OF_SQUARE_COLUMNS RESULTING_PIXELS_PER_SQUARE"
   $stderr.puts "       Resulting svg is written to stdout."
   $stderr.puts 
@@ -86,8 +86,8 @@ if ARGV.size < 2
 end  
 
 image = ImageList.new(ARGV[0]).first
-width = ARGV[1].to_i || 20
-resulting_pixels_per_square = ARGV[2].to_i || 20
+width = (ARGV[1] || 20).to_i
+resulting_pixels_per_square = (ARGV[2] || 20).to_i
 height = (width / (image.columns.to_f / image.rows)).to_i + 1
 pixels_per_square = image.columns.to_f / width
 
