@@ -2,6 +2,7 @@
 
 # encoding: utf-8
 
+require "rubygems"
 require "RMagick"
 require "haml"
 
@@ -99,10 +100,10 @@ $stderr.puts "Pixels per square: #{resulting_pixels_per_square}x#{resulting_pixe
 buckets = Array.new(width + 1) {
   Array.new(height + 1) {
     {
-      left: Tile.new,
-      right: Tile.new,
-      top: Tile.new,
-      bottom: Tile.new
+      :left => Tile.new,
+      :right => Tile.new,
+      :top => Tile.new,
+      :bottom => Tile.new
     }
   }
 }
@@ -162,5 +163,5 @@ buckets.each do |array|
 end
 
 engine = Haml::Engine.new(File.read("#{File.expand_path(File.dirname(__FILE__))}/triangle-pixels.haml"))
-puts engine.render(Object.new, {buckets: buckets, scale: resulting_pixels_per_square})
+puts engine.render(Object.new, {:buckets => buckets, :scale => resulting_pixels_per_square})
 
