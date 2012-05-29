@@ -14,5 +14,5 @@ This script requires requires `rmagick` for reading the image and `haml` for wri
 
     $ ./triangle-pixels /path/to/image.jpg 20 > /path/to/result.svg
 
-Will load the file `/path/to/image.jpg` and uses `20` squares in widths to create `40` triangles. Heigh is calculated according to the geometry of the image. The result is then written into `/path/to/result.svg`.
+Will load the file `/path/to/image.jpg` and uses `20` squares in widths to create 40 triangles. Height is calculated according to the geometry of the image. The result is then written into `/path/to/result.svg`.
 
