@@ -139,6 +139,6 @@ buckets.each do |array|
 
 end
 
-engine = Haml::Engine.new(File.read("triangle-pixels.haml"))
+engine = Haml::Engine.new(File.read("#{File.expand_path(File.dirname(__FILE__))}/triangle-pixels.haml"))
 puts engine.render(Object.new, {buckets: buckets, scale: 20})
 
