@@ -101,6 +101,7 @@ buckets = Array.new(width + 1) {
   }
 }
 
+sections = {1 => {-1 => :top, 1 => :right}, -1 => {1 => :bottom, -1 => :left}}
 image.each_pixel do |pixel, column, row|
   x = (column % pixels_per_square)
   y = (row % pixels_per_square)
@@ -128,7 +129,6 @@ image.each_pixel do |pixel, column, row|
     x = (column % pixels_per_square) / pixels_per_square
     y = (row % pixels_per_square) / pixels_per_square
 
-    sections = {-1 => {-1 => :top, 1 => :right}, 1 => {1 => :bottom, -1 => :left}}
     s = sections[(x - y).sign][(x + y - 1).sign]
 
     alpha = xalpha * yalpha
