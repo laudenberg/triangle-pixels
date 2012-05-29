@@ -7,6 +7,14 @@ require "haml"
 
 include Magick
 
+class Pixel
+
+  def tile
+    Tile.new(red, green, blue, 1.0)
+  end
+
+end
+
 class Tile
   attr_accessor :red, :green, :blue, :norm
 
@@ -17,35 +25,25 @@ class Tile
     @norm = norm
   end
 
-  def *(alpha)
-    Tile.new(red * alpha, green * alpha, blue * alpha, norm)
-  end
-
-  def /(alpha)
-    Tile.new(red / alpha, green / alpha, blue / alpha, norm)
-  end
-
   def +(rhs)
     Tile.new(red + rhs.red, green + rhs.green, blue + rhs.blue, norm + rhs.norm)
   end
 
-  def -(rhs)
-    Tile.new(red - rhs.red, green - rhs.green, blue - rhs.blue, norm - rhs.norm)
+  def *(alpha)
+    Tile.new(alpha * red, alpha * green, alpha * blue, alpha * norm)
   end
 
-  def <(rhs)
-    square_length < rhs.square_length
-  end
-
-  def square_length
-    red * red + green * green + blue * blue
-  end
-
-  def abs
-    Tile.new(red.abs, green.abs, blue.abs, norm)
+  def diff(rhs)
+    # calculate the squared l2 norm of the difference
+    rhs = rhs.normalized
+    lhs = normalized
+    (lhs.red + rhs.red) ** 2 + (lhs.green + rhs.green) ** 2 + (lhs.blue + rhs.blue) ** 2
   end
 
   def color
+    throw "uargh" unless red == red
+    throw "uargh" unless green == green
+    throw "uargh" unless blue == blue
     scale = 256 * norm
 
     if scale > 0.0
@@ -55,6 +53,15 @@ class Tile
     end
 
   end
+
+  def normalized
+    if norm == 0.0
+      self
+    else
+      Tile.new(red / norm, green / norm, blue / norm, 1.0)
+    end
+  end
+    
 
   def to_s
     "#{red},#{green},#{blue} * #{norm}"
@@ -124,7 +131,8 @@ image.each_pixel do |pixel, column, row|
     sections = {-1 => {-1 => :top, 1 => :right}, 1 => {1 => :bottom, -1 => :left}}
     s = sections[(x - y).sign][(x + y - 1).sign]
 
-    buckets[bucket_col][bucket_row][s] += Tile.new(pixel.red, pixel.green, pixel.blue, xalpha * yalpha)
+    alpha = xalpha * yalpha
+    buckets[bucket_col][bucket_row][s] += pixel.tile * alpha
   end
 
 end
@@ -132,15 +140,15 @@ end
 buckets.each do |array|
 
   array.each do |cell|
-    a = (cell[:right] - cell[:top]).abs + (cell[:left] - cell[:bottom]).abs
-    b = (cell[:left] - cell[:top]).abs + (cell[:right] - cell[:bottom]).abs
+    a = (cell[:right].diff cell[:top]) + (cell[:left].diff cell[:bottom])
+    b = (cell[:left].diff cell[:top]) + (cell[:right].diff cell[:bottom])
 
     if a < b
-      cell[:right] = cell[:top] = (cell[:right] + cell[:top]) / 2
-      cell[:left] = cell[:bottom] = (cell[:left] + cell[:bottom]) / 2
+      cell[:right] = cell[:top] = (cell[:right].normalized + cell[:top].normalized)
+      cell[:left] = cell[:bottom] = (cell[:left].normalized + cell[:bottom].normalized)
     else
-      cell[:left] = cell[:top] = (cell[:left] + cell[:top]) / 2
-      cell[:right] = cell[:bottom] = (cell[:right] + cell[:bottom]) / 2
+      cell[:left] = cell[:top] = (cell[:left].normalized + cell[:top].normalized)
+      cell[:right] = cell[:bottom] = (cell[:right].normalized + cell[:bottom].normalized)
     end
 
   end
