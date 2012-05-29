@@ -16,7 +16,7 @@ Or, simply use the Gemfile in the root directory with bundler.
      
 ### Usage
 
-    $ ./triangle-pixels /path/to/image.jpg 20 > /path/to/result.svg
+    $ ./triangle-pixels.rb /path/to/image.jpg 20 > /path/to/result.svg
 
 Will load the file `/path/to/image.jpg` and produce `20` columns of squares (holding two triangles each). The number of rows is calculated according to the geometry of the image. The result is written to `/path/to/result.svg`.
 

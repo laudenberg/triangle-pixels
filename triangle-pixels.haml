@@ -3,9 +3,9 @@
   %g
     - buckets.each_with_index do |columns, column|
       - columns.each_with_index do |square, row|
-        %path{:d => "m #{column * scale},#{row * scale} 0,#{1 * scale} #{1 * scale},0 0,#{-1 * scale} z", :style => "fill:#{square[:left].color};stroke:#{square[:left].color};fill-opacity:1"}
+        %path{:d => "m #{column * scale},#{row * scale} 0,#{1 * scale + 1} #{1 * scale + 1},0 0,#{-1 * scale - 1} z", :style => "fill:#{square[:left].color}"}
         - if square[:left].color == square[:top].color
-          %path{:d => "m #{column * scale},#{(row + 1) * scale} #{1 * scale},0 0,#{-1 * scale},0 z", :style => "fill:#{square[:right].color};stroke:#{square[:right].color};fill-opacity:1"}
+          %path{:d => "m #{column * scale},#{(row + 1) * scale} #{1 * scale},0 0,#{-1 * scale},0 z", :style => "fill:#{square[:right].color};"}
         - else
-          %path{:d => "m #{column * scale},#{row * scale} #{1 * scale},#{1 * scale} 0,#{-1 * scale} z", :style => "fill:#{square[:top].color};stroke:#{square[:top].color};fill-opacity:1"}
+          %path{:d => "m #{column * scale},#{row * scale} #{1 * scale},#{1 * scale} 0,#{-1 * scale} z", :style => "fill:#{square[:top].color};"}
 
