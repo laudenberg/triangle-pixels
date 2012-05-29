@@ -3,8 +3,9 @@
 # encoding: utf-8
 
 require "RMagick"
-include Magick
 require "haml"
+
+include Magick
 
 class Tile
   attr_accessor :red, :green, :blue, :norm
@@ -69,6 +70,13 @@ class Float
   end
 
 end
+
+if ARGV.size < 2
+  $stderr.puts "Usage: ./triangle-pixels.rb IMAGE_FILE NUMBER_OF_SQUARE_COLUMNS"
+  $stderr.puts "       Resulting svg is written to stdout."
+  $stderr.puts 
+  exit -1
+end  
 
 image = ImageList.new(ARGV[0]).first
 width = ARGV[1].to_i
