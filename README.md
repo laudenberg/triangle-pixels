@@ -10,6 +10,10 @@ This script requires requires `rmagick` for reading the image and `haml` for wri
     gem install rmagick
     gem install haml
 
+Or, simply use the Gemfile in the root directory with bundler.
+
+    bundle install
+     
 ### Usage
 
     $ ./triangle-pixels /path/to/image.jpg 20 > /path/to/result.svg

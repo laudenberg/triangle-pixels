@@ -11,9 +11,9 @@
   %g#layer1{"inkscape:groupmode" => "layer", "inkscape:label" => "Ebene 1"}
     - buckets.each_with_index do |columns, column|
       - columns.each_with_index do |square, row|
-        %path{:d => "m #{column * scale},#{row * scale} 0,#{1 * scale} #{1 * scale},0 0,#{-1 * scale} z", "inkscape:connector-curvature" => "0", "sodipodi:nodetypes" => "cccc", :style => "fill:#{square[:left].color};stroke:none;fill-opacity:1"}/
+        %path{:d => "m #{column * scale},#{row * scale} 0,#{1 * scale} #{1 * scale},0 0,#{-1 * scale} z", "inkscape:connector-curvature" => "0", "sodipodi:nodetypes" => "cccc", :style => "fill:#{square[:left].color};stroke:#{square[:left].color};fill-opacity:1"}/
         - if square[:left].color == square[:top].color
-          %path{:d => "m #{column * scale},#{(row + 1) * scale} #{1 * scale},0 0,#{-1 * scale},0 z", "inkscape:connector-curvature" => "0", "sodipodi:nodetypes" => "cccc", :style => "fill:#{square[:right].color};stroke:none;fill-opacity:1"}/
+          %path{:d => "m #{column * scale},#{(row + 1) * scale} #{1 * scale},0 0,#{-1 * scale},0 z", "inkscape:connector-curvature" => "0", "sodipodi:nodetypes" => "cccc", :style => "fill:#{square[:right].color};stroke:#{square[:right].color};fill-opacity:1"}/
         - else
-          %path{:d => "m #{column * scale},#{row * scale} #{1 * scale},#{1 * scale} 0,#{-1 * scale} z", "inkscape:connector-curvature" => "0", "sodipodi:nodetypes" => "cccc", :style => "fill:#{square[:top].color};stroke:none;fill-opacity:1"}/
+          %path{:d => "m #{column * scale},#{row * scale} #{1 * scale},#{1 * scale} 0,#{-1 * scale} z", "inkscape:connector-curvature" => "0", "sodipodi:nodetypes" => "cccc", :style => "fill:#{square[:top].color};stroke:#{square[:top].color};fill-opacity:1"}/
 
