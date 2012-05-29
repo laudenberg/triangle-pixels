@@ -1,11 +1,11 @@
 !!! XML
-%svg{"height" => "#{buckets.first.size * scale}px", "version" => "1.1", "width" => "#{buckets.size * scale}px", "xmlns" => "http://www.w3.org/2000/svg", "xmlns:svg" => "http://www.w3.org/2000/svg"}
+- if no_cropping
+  - range = (0..-1)
+- else
+  - range = (0..-2)
+%svg{"height" => "#{buckets.first[range].size * scale}px", "version" => "1.1", "width" => "#{buckets[range].size * scale}px", "xmlns" => "http://www.w3.org/2000/svg", "xmlns:svg" => "http://www.w3.org/2000/svg"}
   %g
   
-    - if no_cropping
-      - range = (0..-1)
-    - else
-      - range = (0..-2)
       
     - buckets[range].each_with_index do |rows, column|
 
