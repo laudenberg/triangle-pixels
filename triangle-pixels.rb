@@ -79,16 +79,22 @@ class Float
 end
 
 if ARGV.size < 2
-  $stderr.puts "Usage: ./triangle-pixels.rb IMAGE_FILE NUMBER_OF_SQUARE_COLUMNS"
+  $stderr.puts "Usage: ./triangle-pixels.rb IMAGE_FILE NUMBER_OF_SQUARE_COLUMNS RESULTING_PIXELS_PER_SQUARE"
   $stderr.puts "       Resulting svg is written to stdout."
   $stderr.puts 
   exit -1
 end  
 
 image = ImageList.new(ARGV[0]).first
-width = ARGV[1].to_i
+width = ARGV[1].to_i || 20
+resulting_pixels_per_square = ARGV[2].to_i || 20
 height = (width / (image.columns.to_f / image.rows)).to_i + 1
 pixels_per_square = image.columns.to_f / width
+
+$stderr.puts "Image: '#{image.filename}'"
+$stderr.puts "Columns: #{width}"
+$stderr.puts "Rows: #{height}"
+$stderr.puts "Pixels per square: #{resulting_pixels_per_square}x#{resulting_pixels_per_square}"
 
 buckets = Array.new(width + 1) {
   Array.new(height + 1) {
@@ -156,5 +162,5 @@ buckets.each do |array|
 end
 
 engine = Haml::Engine.new(File.read("#{File.expand_path(File.dirname(__FILE__))}/triangle-pixels.haml"))
-puts engine.render(Object.new, {buckets: buckets, scale: 20})
+puts engine.render(Object.new, {buckets: buckets, scale: resulting_pixels_per_square})
 

@@ -16,7 +16,11 @@ Or, simply use the Gemfile in the root directory with bundler.
      
 ### Usage
 
-    $ ./triangle-pixels.rb /path/to/image.jpg 20 > /path/to/result.svg
+    $ ./triangle-pixels.rb /path/to/image.jpg 20 50 > /path/to/result.svg
 
-Will load the file `/path/to/image.jpg` and produce `20` columns of squares (holding two triangles each). The number of rows is calculated according to the geometry of the image. The result is written to `/path/to/result.svg`.
+Will load the file `/path/to/image.jpg` to produce `20` columns of squares, holding two triangles, with a size of 50x50px each (defaults to 20px). The number of rows is calculated according to the geometry of the image. The result is written to `/path/to/result.svg`. You could use software like [Inkscape](http://www.inkscape.org/) to view, edit, or convert the image.
+
+    $ inkscape -f /path/to/result.svg -e /path/to/result.png -C -d 90
+
+Will convert the result to a PNG-image with a dpi of 90.
 
