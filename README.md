@@ -5,7 +5,7 @@ Inspired by [The pxl effect with javascript and canvas (and maths)](http://revda
 
 ### Installation
 
-This script requires requires `rmagick` for reading the image and `haml` for writing svg.
+This script requires `rmagick` for reading the image and `haml` for writing svg.
 
     gem install rmagick
     gem install haml
