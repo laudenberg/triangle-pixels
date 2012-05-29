@@ -79,8 +79,11 @@ class Float
 
 end
 
+no_cropping = ARGV.delete("--keep")
+
 if ARGV.size < 1
-  $stderr.puts "Usage: ./triangle-pixels.rb IMAGE_FILE NUMBER_OF_SQUARE_COLUMNS RESULTING_PIXELS_PER_SQUARE"
+  $stderr.puts "Usage: ./triangle-pixels.rb IMAGE_FILE NUMBER_OF_SQUARE_COLUMNS RESULTING_PIXELS_PER_SQUARE [--keep]"
+  $stderr.puts "       Optional '--keep' will keep possibly not completely filled edges." 
   $stderr.puts "       Resulting svg is written to stdout."
   $stderr.puts 
   exit -1
@@ -90,12 +93,18 @@ image = ImageList.new(ARGV[0]).first
 width = (ARGV[1] || 20).to_i
 resulting_pixels_per_square = (ARGV[2] || 20).to_i
 height = (width / (image.columns.to_f / image.rows)).to_i + 1
-pixels_per_square = image.columns.to_f / width
 
 $stderr.puts "Image: '#{image.filename}'"
 $stderr.puts "Columns: #{width}"
 $stderr.puts "Rows: #{height}"
 $stderr.puts "Pixels per square: #{resulting_pixels_per_square}x#{resulting_pixels_per_square}"
+
+if no_cropping
+  width -= 1
+  height -= 1
+end
+
+pixels_per_square = image.columns.to_f / width
 
 buckets = Array.new(width + 1) {
   Array.new(height + 1) {
@@ -144,9 +153,9 @@ image.each_pixel do |pixel, column, row|
 
 end
 
-buckets.each do |array|
+buckets.each do |columns|
 
-  array.each do |cell|
+  columns.each do |cell|
     a = (cell[:right].diff cell[:top]) + (cell[:left].diff cell[:bottom])
     b = (cell[:left].diff cell[:top]) + (cell[:right].diff cell[:bottom])
 
@@ -163,5 +172,5 @@ buckets.each do |array|
 end
 
 engine = Haml::Engine.new(File.read("#{File.expand_path(File.dirname(__FILE__))}/triangle-pixels.haml"))
-puts engine.render(Object.new, {:buckets => buckets, :scale => resulting_pixels_per_square})
+puts engine.render(Object.new, {:buckets => buckets, :scale => resulting_pixels_per_square, :no_cropping => no_cropping})
 

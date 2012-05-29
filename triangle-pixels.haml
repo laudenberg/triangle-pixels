@@ -1,11 +1,15 @@
 !!! XML
 %svg{"height" => "#{buckets.first.size * scale}px", "version" => "1.1", "width" => "#{buckets.size * scale}px", "xmlns" => "http://www.w3.org/2000/svg", "xmlns:svg" => "http://www.w3.org/2000/svg"}
   %g
-    - buckets.each_with_index do |columns, column|
-      - columns.each_with_index do |square, row|
-        %path{:d => "m #{column * scale},#{row * scale} 0,#{1 * scale + 1} #{1 * scale + 1},0 0,#{-1 * scale - 1} z", :style => "fill:#{square[:left].color}"}
-        - if square[:left].color == square[:top].color
-          %path{:d => "m #{column * scale},#{(row + 1) * scale} #{1 * scale},0 0,#{-1 * scale},0 z", :style => "fill:#{square[:right].color};"}
+    - if no_cropping
+      - range = (0..-1)
+    - else
+      - range = (0..-2)
+    - buckets[range].each_with_index do |columns, column|
+      - columns[range].each_with_index do |cell, row|
+        %path{:d => "m #{column * scale},#{row * scale} 0,#{1 * scale + 1} #{1 * scale + 1},0 0,#{-1 * scale - 1} z", :style => "fill:#{cell[:left].color}"}
+        - if cell[:left].color == cell[:top].color
+          %path{:d => "m #{column * scale},#{(row + 1) * scale} #{1 * scale},0 0,#{-1 * scale},0 z", :style => "fill:#{cell[:right].color};"}
         - else
-          %path{:d => "m #{column * scale},#{row * scale} #{1 * scale},#{1 * scale} 0,#{-1 * scale} z", :style => "fill:#{square[:top].color};"}
+          %path{:d => "m #{column * scale},#{row * scale} #{1 * scale},#{1 * scale} 0,#{-1 * scale} z", :style => "fill:#{cell[:top].color};"}
 
