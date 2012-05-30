@@ -36,9 +36,9 @@ class Tile
 
   def diff(rhs)
     # calculate the squared l2 norm of the difference
-    rhs = rhs.normalized
-    lhs = normalized
-    (lhs.red + rhs.red) ** 2 + (lhs.green + rhs.green) ** 2 + (lhs.blue + rhs.blue) ** 2
+    rhs = rhs.to_pixel.to_hsla
+    lhs = to_pixel.to_hsla
+    (lhs[0] + rhs[0]) ** 2 + (lhs[1] + rhs[1]) ** 2 + (lhs[2] + rhs[2]) ** 2
   end
 
   def color
@@ -63,6 +63,10 @@ class Tile
     end
   end
     
+  def to_pixel
+    t = normalized
+    Pixel.new(t.red, t.green, t.blue, 0)
+  end
 
   def to_s
     "#{red},#{green},#{blue} * #{norm}"
