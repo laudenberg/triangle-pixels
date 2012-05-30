@@ -3,6 +3,9 @@ triangle-pixels
 
 Inspired by [The pxl effect with javascript and canvas (and maths)](http://revdancatt.com/2012/03/31/the-pxl-effect-with-javascript-and-canvas-and-maths/), this script creates a similar "pxl"-effect for any input image with a couple of lines of Ruby.
 
+![Portrait](https://raw.github.com/laudenberg/triangle-pixels/master/portrait.png)
+![Portrait Triangles](https://raw.github.com/laudenberg/triangle-pixels/master/portrait-triangles.png)
+
 ### Installation
 
 This script requires `rmagick` for reading the image and `haml` for writing svg.
